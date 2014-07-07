@@ -6,6 +6,7 @@
 \usepackage{listings}
 \usepackage{fancyhdr}
 \usepackage{amssymb, amsmath} 
+\usepackage{hyperref}
 \pagestyle{fancy}
 \renewcommand{\headrulewidth}{0.1pt}
 \lhead{Universiteit Leiden}
@@ -35,7 +36,11 @@
 \selectlanguage{english}
 
 \maketitle
+
 \newpage
+
+\tableofcontents
+
 \section{Team}
 \begin{itemize}
 \item Tobias de Jong
@@ -44,17 +49,9 @@
 \end{itemize}
 
 \section{Confs}
+
 \subsection{vimrc}
-\begin{lstlisting}
-syntax on
-set nowrap
-set encoding=utf-8
-set number
-set smartindent
-filetype plugin indent on
-set tabstop=4 softtabstop=4 shiftwidth=4 noexpandtab
-colorscheme desert
-\end{lstlisting}
+\lstinputlisting{vimrc}
 
 \subsection{makefile}
 \lstinputlisting[language=make]{Makefile}
@@ -83,121 +80,10 @@ colorscheme desert
 \end{itemize}
 
 \subsection{Dijkstra}
-\begin{lstlisting}
-#include <vector>
-#include <set>
-#include <list>
-
-using namespace std;
-
-struct vertex {
-	list<pair<int, int> > connections; // idx −> weight
-	unsigned int dist;
-	unsigned int prev;
-};
-
-int dijkstra(vector<vertex>& graph, int source, int dest)
-{
-	const unsigned int infinity = -1;
-
-	for (unsigned int i = 0; i < graph.size(); i++)
-	{
-		graph[i].dist = infinity;
-		graph[i].prev = infinity;
-	}
-
-	set<int> todo;
-	graph[source].dist = 0;
-	todo.insert(source);
-
-	while (!todo.empty())
-	{
-		int index = todo.begin();
-		vertex &cur = graph[index];
-		todo.erase(todo.begin());
-
-		for(auto &conn : cur.connections)
-		{
-			int idx = conn.first;
-			int weight = conn.second;
-
-			unsigned int alt = cur.dist + weight;
-			if (alt < graph[idx].dist)
-			{
-				graph[idx].dist = alt;
-				graph[idx].prev = index;
-				// Reorder
-				todo.insert(idx);
-			}
-		}
-	}
-
-	return graph[dest].dist;
-}
-\end{lstlisting}
+\lstinputlisting[language=c++]{dijkstra.cpp}
 
 \subsection{Floodfill}
-\begin{lstlisting}
-#include <queue>
-#include <tuple>
-
-using namespace std;
-
-const int grid_w = 10;
-const int grid_h = 10;
-const unsigned int inf = -1;
-struct tile
-{
-	enum 
-	{
-		OPEN,
-		CLOSED,
-		END
-	} type;
-	unsigned int dist;
-	tile()
-		: dist(inf)
-	{
-	}
-} grid[grid_w][grid_h];
-
-int main()
-{
-	typedef pair<int, int> coordinate;
-	queue<coordinate> openList;
-
-	// Insert initial coordinate
-	// with distance 0 (obviously)
-
-	while (!openList.empty())
-	{
-		int curx, cury;
-		tie(curx, cury) = openList.front();
-
-		tile &curtile = grid[curx][cury];
-		if (curtile.type == tile::END)
-			break;
-		for (int x = curx-1; x <= curx+1; ++x)
-			for (int y = cury-1; y <= cury+1; ++y)
-				if ((x-curx) * (y-cury) == 0 && 
-						x > 0 && y > 0 &&
-						x < grid_w && y < grid_h &&
-						grid[x][y].type != tile::CLOSED &&
-						grid[x][y].dist == inf)
-				{
-					grid[x][y].dist = curtile.dist+1;
-					openList.push(make_pair(x, y));
-				}
-
-		openList.pop();
-	}
-
-	bool success = !openList.empty();
-	//tile result = openList.front();
-
-	return success;
-}
-\end{lstlisting}
+\lstinputlisting[language=c++]{floodfill.cpp}
 
 \subsection{Building heap}
 Insert at the bottom, bubble up by swapping with parent if bigger.
@@ -217,10 +103,41 @@ Insert at the bottom, bubble up by swapping with parent if bigger.
 \item Transform-and-conquer - transform to known problem, solve that, transform answer
 \end{itemize}
 
-\subsection{Math}
-\subsubsection{(co)sinusregel}
+\section{Math}
+\subsection{(co)sinusregel}
+
 \[\frac{\sin a}{\alpha} = \frac{\sin b}{\beta} =\frac{\sin c}{\gamma}\]
 \[c^2=a^2+b^2-2ab\cos(\gamma)\]
-\subsubsection{Combinatorics}
+
+\subsection{Combinatorics}
+
 \[\binom{n+m}{r} = \sum_{k=0}^r \binom{n}{k} \binom{m}{r-k}\]
+
+\subsection{Deelbaarheid}
+
+\subsubsection{3 en 9}
+
+De som van de cijfers moet deelbaar zijn door respectievelijk 3 en 9.
+
+\begin{align*}
+	291261 \to & 19 \text{ \emph{niet deelbaar}} \\
+	815308974 \to & 45 \text{ \emph{wel deelbaar}}
+\end{align*}
+
+\subsubsection{7}
+
+Drie herhaalbare stappen, ge\"illustreerd aan de hand van het voorbeeld 203.
+
+\begin{enumerate}
+	\item Neem het laatste cijfer van het oorspronkelijke getal en verdubbel het, in het voorbeeld $3 \to 6$.
+	\item Haal dit van het resterende geval, in het voorbeeld $20 - 6 = 14$.
+	\item Is het duidelijk dat dit deelbaar is door zeven? Zo niet, ga naar stap 1.
+\end{enumerate}
+
+\subsubsection{11}
+
+De alternerende som van de cijfers moet gelijk zijn aan 0. Dit is duidelijker met een voorbeeld.
+
+\[123455216 \to 1 - 2 + 3 - 4 + 5 - 5 + 2 - 1 + 0 = 0\]
+
 \end{document}

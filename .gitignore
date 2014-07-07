@@ -4,3 +4,12 @@
 *.aux
 *.o
 *.log
+*.toc
+# Compilation artifacts.
+A
+B
+C
+D
+E
+F
+base
