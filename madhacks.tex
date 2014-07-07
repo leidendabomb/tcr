@@ -1,0 +1,249 @@
+\documentclass[10pt]{article}
+
+\frenchspacing
+
+\usepackage[english]{babel}
+\usepackage{listings}
+\usepackage{fancyhdr}
+\usepackage{amssymb, amsmath} 
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{0.1pt}
+\lhead{Universiteit Leiden}
+\rhead{\thepage}
+\fancyfoot{}
+\lstset{
+  breakatwhitespace=true,
+  breaklines=true,
+  tabsize=2,
+  basicstyle=\small,
+  numbers=left,
+  numberstyle=\tiny,
+  numberfirstline=false,
+  stepnumber=1,
+  identifierstyle=\ttfamily,
+  title=\lstname
+}
+
+\title{Mad hacks\\[1cm]
+\small{Team Reference Document of:}}
+\author{:()\{:$\vert$:\&\};: (da bomb)\\[1cm]
+	\small{Universiteit Leiden}}
+
+\begin{document}
+
+\fontsize{10}{12}
+
+\selectlanguage{english}
+
+\maketitle
+\newpage
+\section{Team}
+\begin{itemize}
+\item Tobias de Jong
+\item Bert Peters
+\item Bart van Strien
+\end{itemize}
+
+\section{Confs}
+\subsection{vimrc}
+\begin{lstlisting}
+syntax on
+set nowrap
+set encoding=utf-8
+set number
+set smartindent
+filetype plugin indent on
+set tabstop=4 softtabstop=4 shiftwidth=4 noexpandtab
+colorscheme desert
+\end{lstlisting}
+
+\subsection{makefile}
+\begin{lstlisting}
+.PHONY: all
+CXXFLAGS=-std=c++11 -pedantic -Wall -Wextra -g -O0
+
+all: $(patsubst %.cpp,%,$(wildcard *.cpp))
+
+%: %.cpp
+	$(CXX) -o $@ $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) $^
+\end{lstlisting}
+
+\subsection{base.cpp}
+\begin{lstlisting}
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+	int numEntries = 0;
+	cin >> numEntries;
+	cin.ignore();
+	
+	while (numEntries--)
+	{
+	}
+	return 0;
+}
+\end{lstlisting}
+
+\section{Algorithms}
+\subsection{List}
+\begin{itemize}
+\item Depth First Search
+\item Breadth First Search
+\item Binary Search
+\item Linear search
+\item Dijkstra
+\item Quicksort $O(n^2)$ - pick pivot, $A<pivot \leq B$, effort splitting
+\item Mergesort $O(n \log n)$ - effort merging, compare first of A with first of B
+\item Heapsort $O(n \log n)$ - turn array into heap, then repeatedly get the largest value
+\item Bubble sort $O(n^2)$- swap neighbours
+\item Insertion sort $O(n^2)$
+\item Select sort $O(n^2)$ - select minimum in unsorted rest
+\item Bucket sort $O(n^2)$ - buckets contain elements with values $a < x \leq b$
+\item Radix sort $O(nk)$ - sort numbers by least significant digit (radix $k$), to highest significant digit with stable (typically counting) sort
+\end{itemize}
+
+\subsection{Dijkstra}
+\begin{lstlisting}
+#include <vector>
+#include <set>
+#include <list>
+
+using namespace std;
+
+struct vertex {
+	list<pair<int, int> > connections; // idx −> weight
+	unsigned int dist;
+	unsigned int prev;
+};
+
+int dijkstra(vector<vertex>& graph, int source, int dest)
+{
+	const unsigned int infinity = -1;
+
+	for (unsigned int i = 0; i < graph.size(); i++)
+	{
+		graph[i].dist = infinity;
+		graph[i].prev = infinity;
+	}
+
+	set<int> todo;
+	graph[source].dist = 0;
+	todo.insert(source);
+
+	while (!todo.empty())
+	{
+		int index = todo.begin();
+		vertex &cur = graph[index];
+		todo.erase(todo.begin());
+
+		for(auto &conn : cur.connections)
+		{
+			int idx = conn.first;
+			int weight = conn.second;
+
+			unsigned int alt = cur.dist + weight;
+			if (alt < graph[idx].dist)
+			{
+				graph[idx].dist = alt;
+				graph[idx].prev = index;
+				// Reorder
+				todo.insert(idx);
+			}
+		}
+	}
+
+	return graph[dest].dist;
+}
+\end{lstlisting}
+
+\subsection{Floodfill}
+\begin{lstlisting}
+#include <queue>
+#include <tuple>
+
+using namespace std;
+
+const int grid_w = 10;
+const int grid_h = 10;
+const unsigned int inf = -1;
+struct tile
+{
+	enum 
+	{
+		OPEN,
+		CLOSED,
+		END
+	} type;
+	unsigned int dist;
+	tile()
+		: dist(inf)
+	{
+	}
+} grid[grid_w][grid_h];
+
+int main()
+{
+	typedef pair<int, int> coordinate;
+	queue<coordinate> openList;
+
+	// Insert initial coordinate
+	// with distance 0 (obviously)
+
+	while (!openList.empty())
+	{
+		int curx, cury;
+		tie(curx, cury) = openList.front();
+
+		tile &curtile = grid[curx][cury];
+		if (curtile.type == tile::END)
+			break;
+		for (int x = curx-1; x <= curx+1; ++x)
+			for (int y = cury-1; y <= cury+1; ++y)
+				if ((x-curx) * (y-cury) == 0 && 
+						x > 0 && y > 0 &&
+						x < grid_w && y < grid_h &&
+						grid[x][y].type != tile::CLOSED &&
+						grid[x][y].dist == inf)
+				{
+					grid[x][y].dist = curtile.dist+1;
+					openList.push(make_pair(x, y));
+				}
+
+		openList.pop();
+	}
+
+	bool success = !openList.empty();
+	//tile result = openList.front();
+
+	return success;
+}
+\end{lstlisting}
+
+\subsection{Building heap}
+Insert at the bottom, bubble up by swapping with parent if bigger.
+
+\subsection{Algorithms}
+\begin{itemize}
+\item Brute Force
+\item Backtracking
+\item Divide and Conquer - split and recurse \\
+	Depth of Tree
+\item Dynamic Programming - fill array bottom up \\
+	Fibonacci, knapsack
+\item Greedy shit
+\item Dijkstra
+\item Branch-and-bound - optimization \\
+	Cut off when estimate below minimum or above maximum, travelling salesman
+\item Transform-and-conquer - transform to known problem, solve that, transform answer
+\end{itemize}
+
+\subsection{Math}
+\subsubsection{(co)sinusregel}
+\[\frac{\sin a}{\alpha} = \frac{\sin b}{\beta} =\frac{\sin c}{\gamma}\]
+\[c^2=a^2+b^2-2ab\cos(\gamma)\]
+\subsubsection{Combinatorics}
+\[\binom{n+m}{r} = \sum_{k=0}^r \binom{n}{k} \binom{m}{r-k}\]
+\end{document}
