@@ -26,7 +26,7 @@ int dijkstra(vector<vertex>& graph, int source, int dest)
 
 	while (!todo.empty())
 	{
-		int index = todo.begin();
+		int index = *todo.begin();
 		vertex &cur = graph[index];
 		todo.erase(todo.begin());
 
