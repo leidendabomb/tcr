@@ -69,6 +69,14 @@
 \item Binary Search
 \item Linear search
 \item Dijkstra
+\begin{itemize}
+\item Bellman-Ford- Dijkstra for negative weights. relax $v-1$ times for all edges
+\end{itemize}
+\item Ford-Fulkerson: max flow - find paths from source to sink while possible. (breadth- or depth first)
+\begin{itemize}
+\item Max flow - min cut: FF- then extend from source until no edges with non-zero residual capacity can be added.
+\item bipartite matching - find max matches out of a possible set by converting to max flow
+\end{itemize}
 \item Quicksort $O(n^2)$ - pick pivot, $A<pivot \leq B$, effort splitting
 \item Mergesort $O(n \log n)$ - effort merging, compare first of A with first of B
 \item Heapsort $O(n \log n)$ - turn array into heap, then repeatedly get the largest value
@@ -96,6 +104,7 @@ Insert at the bottom, bubble up by swapping with parent if bigger.
 	Depth of Tree
 \item Dynamic Programming - fill array bottom up \\
 	Fibonacci, knapsack
+\item Memoization - fill array as you go
 \item Greedy shit
 \item Dijkstra
 \item Branch-and-bound - optimization \\
