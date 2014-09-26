@@ -5,6 +5,8 @@
 #include <utility>
 #include <cmath>
 #include <map>
+#include <list>
+#include <algorithm>
 
 using namespace std;
 
