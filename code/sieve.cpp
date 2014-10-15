@@ -1,7 +1,8 @@
 const int SIEVE_MAX = 10000000;
 
 // Do a static allocation
-bool sieve[SIEVE_MAX] = {true};
+bool sieve[SIEVE_MAX];
+memset(sieve, true, SIEVE_MAX);
 
 sieve[0] = false;
 sieve[1] = false;
