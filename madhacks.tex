@@ -48,6 +48,8 @@
 \item Bart van Strien
 \end{itemize}
 
+\pagebreak
+
 \section{Confs}
 
 \subsection{vimrc}
@@ -60,6 +62,45 @@
 
 \subsection{base.cpp}
 \lstinputlisting[language=c++]{code/base.cpp}
+
+\pagebreak
+
+\section{STL}
+
+\subsection{Binary search}
+
+\begin{lstlisting}[language=c++]
+// True desda element bestaat dat niet groter danwel kleiner is.
+bool binary_search(begin, end, x);
+\end{lstlisting}
+
+\subsection{Limieten}
+In de header \texttt{<limits>} staan de limieten voor de normale datatypes.
+\lstinputlisting[language=c++]{code/limits.cpp}
+
+\subsection{Initialisatie}
+
+\lstinputlisting[language=c++]{code/init.cpp}
+
+\pagebreak
+
+\section{Grafen}
+
+\subsection{Doorlopen}
+
+\subsubsection{Depth first}
+
+\lstinputlisting[language=c++]{code/graph-dfs.cpp}
+
+\subsubsection{Breadth first}
+
+\lstinputlisting[language=c++]{code/graph-bfs.cpp}
+
+\subsection{Kortste pad}
+
+\subsubsection{Dijkstra}
+
+\lstinputlisting[language=c++]{code/dijkstra.cpp}
 
 \section{List of common algorithms}
 \begin{itemize}
@@ -100,10 +141,9 @@
 \item Sweep line - Sort points on one coordinate, walk through them. Binary search possible!
 \end{itemize}
 
-\section{Pre-coded algorithms}
+\pagebreak
 
-\subsection{Dijkstra}
-\lstinputlisting[language=c++]{code/dijkstra.cpp}
+\section{Pre-coded algorithms}
 
 \subsection{Floodfill}
 \lstinputlisting[language=c++]{code/floodfill.cpp}
