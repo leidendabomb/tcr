@@ -1,50 +1,32 @@
-#include <vector>
-#include <set>
-#include <list>
+const unsigned MAX_NODES = 100000;
+const double INFINITY = numeric_limits<double>::infinity();
 
-using namespace std;
+typedef pair<double, unsigned> halfpijl; // gewicht en bestemming
 
-struct vertex {
-	list<pair<int, int> > connections; // idx −> weight
-	unsigned int dist;
-	unsigned int prev;
-};
+vector<halfpijl> buren[MAX_NODES];
+double dist[MAX_NODES];
 
-int dijkstra(vector<vertex>& graph, int source, int dest)
-{
-	const unsigned int infinity = -1;
+void dijkstra(unsigned start) {
+	priority_queue<halfpijl, vector<halfpijl>, greater<halfpijl>> q;
 
-	for (unsigned int i = 0; i < graph.size(); i++)
-	{
-		graph[i].dist = infinity;
-		graph[i].prev = infinity;
-	}
+	fill_n(dist, MAX_NODES, INFINITY);
 
-	set<int> todo;
-	graph[source].dist = 0;
-	todo.insert(source);
+	dist[start] = 0;
+	q.push(make_pair(0, start));
 
-	while (!todo.empty())
-	{
-		int index = *todo.begin();
-		vertex &cur = graph[index];
-		todo.erase(todo.begin());
+	while (!q.empty()) {
+		halfpijl cur = q.top();
+		q.pop();
 
-		for(auto &conn : cur.connections)
-		{
-			int idx = conn.first;
-			int weight = conn.second;
+		if (dist[cur.second] < cur.first) {
+			continue;
+		}
 
-			unsigned int alt = cur.dist + weight;
-			if (alt < graph[idx].dist)
-			{
-				graph[idx].dist = alt;
-				graph[idx].prev = index;
-				// Reorder
-				todo.insert(idx);
+		for (auto &buur : buren) {
+			if (cur.first + buur.first < dist[buur.second]) {
+				dist[buur.second] = cur.first + buur.second;
+				q.push(make_pair(dist[buur.second], buur.second));
 			}
 		}
 	}
-
-	return graph[dest].dist;
 }
