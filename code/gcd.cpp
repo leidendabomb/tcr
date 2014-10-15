@@ -1,4 +1,4 @@
-int gcd(const int a, const int b) {
+uint64_t gcd(const uint64_t a, const uint64_t b) {
 	if (a < b) {
 		return gcd(b, a);
 	} else {
