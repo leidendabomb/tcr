@@ -5,5 +5,7 @@ set number
 set smartindent
 filetype plugin indent on
 set tabstop=4 softtabstop=4 shiftwidth=4 noexpandtab
-map <F5> <Esc>:update<CR>:make<CR>
 colorscheme desert
+
+map <F5> :update<CR>:make<CR>
+imap <F5> <ESC>:update<CR>:make<CR>
