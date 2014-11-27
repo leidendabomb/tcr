@@ -195,6 +195,15 @@ Insert at the bottom, bubble up by swapping with parent if bigger.
 
 \[\binom{n+m}{r} = \sum_{k=0}^r \binom{n}{k} \binom{m}{r-k}\]
 
+\subsection{Recurrency}
+The following is a generalization of "Het zal wel een e-macht zijn", corresponding in this discrete case to inserting a trail $\lambda^n$.
+For the recurrency relation $a_n = c_1a_{n-1} + c_2a_{n-2} + \dots + c_da_{n-d}$, the characteristic polynomial is given by:
+\[p(t) = t^d - \sum_{i=1}^d c_it^{d-i}\]
+The solution is given by:
+\[a_n = \sum_{i=1}^d k_ir_i^n\]
+Where $r_i$ are the roots of the characteristic polynomial and $k_i$ are determined by initial conditions. For roots with multiplicity higher than one the analog of the continuous case also holds (for multiplicity 3):
+\[a_n = k_1r^n+k_2nr^n+k_3n^2r^n\]
+Dynamical system matrix notation also works.
 \subsection{Deelbaarheid}
 
 \subsubsection{3 en 9}
