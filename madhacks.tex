@@ -194,6 +194,8 @@ Dit algoritme geeft gegeven een \texttt{needle} en een \texttt{haystack} de eers
 Insert at the bottom, bubble up by swapping with parent if bigger.
 
 \section{Math}
+
+
 \subsection{(co)sinusregel}
 
 \[\frac{\sin a}{\alpha} = \frac{\sin b}{\beta} =\frac{\sin c}{\gamma}\]
@@ -212,6 +214,18 @@ The solution is given by:
 Where $r_i$ are the roots of the characteristic polynomial and $k_i$ are determined by initial conditions. For roots with multiplicity higher than one the analog of the continuous case also holds (for multiplicity 3):
 \[a_n = k_1r^n+k_2nr^n+k_3n^2r^n\]
 Dynamical system matrix notation also works.
+
+\subsection{Numeriek benaderen}
+
+\subsubsection{Methode van Newton-Raphson}
+
+De methode van Newton-Raphson berekent gegeven een functie $f(x)$ en zijn afgeleide $f'(x)$ een nulpunt van $f(x)$. Hiervoor is ook een goede schatter $x_0$ nodig. Daarna kun je de volgende iteratiestap toepassen:
+\begin{align*}
+    x_{n+1} = x_{n} - \frac{f(x_{n})}{f'(x_{n})}
+\end{align*}
+Deze methode geeft, vanaf het moment dat het eerste cijfer klopt, iedere iteratie ongeveer twee keer zoveel correcte decimalen.
+
+
 \subsection{Deelbaarheid}
 
 \subsubsection{3 en 9}
