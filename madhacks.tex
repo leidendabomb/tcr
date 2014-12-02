@@ -225,6 +225,11 @@ De methode van Newton-Raphson berekent gegeven een functie $f(x)$ en zijn afgele
 \end{align*}
 Deze methode geeft, vanaf het moment dat het eerste cijfer klopt, iedere iteratie ongeveer twee keer zoveel correcte decimalen.
 
+\subsubsection{Ternary search}
+
+Met ternary search kun je van een U-vorminge grafiek een maximum (of minumum) bepalen. De complexiteit van dit algoritme is $\Theta(\log n)$. Het is belangrijk om bij de precisie rekening te houden met de floating point accuracy.
+
+\lstinputlisting[language=c++]{code/ternary_search.cpp}
 
 \subsection{Deelbaarheid}
 
