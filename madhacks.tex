@@ -130,6 +130,14 @@ Complexity: $O(n(\text{log }n)(\text{log log }n))$ for $n = \text{\texttt{SIEVE\
 
 \lstinputlisting[language=bash]{code/primegen.sh}
 
+\section{String}
+
+\subsection{Knuth Morris Pratt}
+
+Dit algoritme geeft gegeven een \texttt{needle} en een \texttt{haystack} de eerste positie van \texttt{needle} in \texttt{haystack}, of $-1$ indien het niet gevonden kan worden. Het algoritme is $O(n)$. Het algoritme kan makkelijk aangepast worden om het aantal keer voorkomen van de substring te vinden, of om een aparte matching regel te hebben. Daarnaast kan het nuttig zijn om de fallback tabel te cachen per \texttt{needle}.
+
+\lstinputlisting[language=c++]{code/kmp.cpp}
+
 \section{List of common algorithms}
 \begin{itemize}
 \item Depth First Search
