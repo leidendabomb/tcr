@@ -22,7 +22,7 @@ void dijkstra(unsigned start) {
 			continue;
 		}
 
-		for (auto &buur : buren) {
+		for (auto &buur : buren[cur.second]) {
 			if (cur.first + buur.first < dist[buur.second]) {
 				dist[buur.second] = cur.first + buur.second;
 				q.push(make_pair(dist[buur.second], buur.second));
