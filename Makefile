@@ -3,4 +3,4 @@
 all: madhacks.pdf
 
 madhacks.pdf: madhacks.tex $(wildcard code/*) conf/vimrc conf/Makefile
-	pdflatex madhacks.tex
+	xelatex madhacks.tex
