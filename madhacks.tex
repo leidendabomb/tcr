@@ -195,6 +195,27 @@ Dit algoritme geeft gegeven een \texttt{needle} en een \texttt{haystack} de eers
 \subsection{Building heap}
 Insert at the bottom, bubble up by swapping with parent if bigger.
 
+\subsection{Graph diameter}
+Set the upper bound to $D_u = \infty$, the lower bound $D_l = -\infty$ and the
+list of open nodes $W = V$. The eccentricity of a node is the length of its
+longest shortest path.
+
+Until $D_u = D_l$ or $W = \emptyset$.
+\begin{itemize}
+	\item Select a node $v \in W$.
+	\item Compute the eccentricity of $v$. For every node $w$ update the lower
+		and upper bounds on the eccentricity, $e_l(w) \leftarrow \max(e_l(w),
+		e(v) - d(v, w), d(v, w))$ and $e_u(w) \leftarrow \min(e_u(w), e(v)
+		+ d(v, w))$.
+	\item Update the diameter bounds $D_l$ and $D_u$.
+	\item Remove nodes from $W$ that add no new information.
+		$(e_u(w) \leq D_l \land e_l(w) \geq \frac{D_u}{2}) \lor e_l(w) =
+		e_u(w)$.
+\end{itemize}
+
+A good selection strategy seems to be interchanging the node with the smallest
+eccentricity lower bound and the node with the largest eccentricity upper bound.
+
 \section{Math}
 
 
